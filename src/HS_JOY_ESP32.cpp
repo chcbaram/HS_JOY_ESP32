@@ -282,7 +282,7 @@ bool HS_JOY_ESP32::menuDraw(menu_t *p_menu)
 
     for (int i=0; i< lcd.width(); i+=4)
     {
-      lcd.fillRect(i, 0, 2, lcd.height(), 0);
+      lcd.fillRect(i, 0, 4, lcd.height(), 0);
       lcd.display();
     }
     p_menu->run_count = 1;      
