@@ -61,6 +61,9 @@ bool HS_JOY_ESP32::begin(int baud)
   digitalWrite(35, HIGH);
 
   
+  pinMode(32, OUTPUT);
+  digitalWrite(32, HIGH); // led off
+  
   adcInfoInit();
   adcInfoEnable(VBAT);
   
