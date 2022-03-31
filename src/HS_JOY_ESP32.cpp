@@ -191,7 +191,7 @@ void HS_JOY_ESP32::ledOff(void)
 
 void HS_JOY_ESP32::ledToggle(void)
 {
-  digitalWrite(32, !digitalRead(13));
+  digitalWrite(32, !digitalRead(32));
 }
 
 uint8_t HS_JOY_ESP32::batteryGetVoltage(void)
