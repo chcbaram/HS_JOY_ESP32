@@ -76,11 +76,6 @@ void Battery::update(void)
     vol   = constrain(bat_vol, bat_min, bat_max);
 
     value = map(vol, bat_min, bat_max, 0, 100);
-
-    Serial.println("start");
-    Serial.println(value);
-    Serial.println(avg);
-    Serial.println(bat_vol);
     if (abs((double)(value-last_level)) > 5 || value == 100)
     {
       bat_level = value;
