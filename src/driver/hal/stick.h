@@ -40,7 +40,7 @@ class Stick
 
 
     int32_t dead_zone;
-    int32_t adc_max_value;    
+    int32_t adc_max_value;        
 };
 
 

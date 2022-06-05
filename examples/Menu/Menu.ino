@@ -28,12 +28,12 @@ void loop()
 void batteryInfo() 
 {
   // put your main code here, to run repeatedly
-  float vol;
 
   hs_joy.lcd.clearDisplay();
   hs_joy.lcd.printf(0, 0, "Battery Voltage");
-  vol = hs_joy.battery.getVoltage();
-  hs_joy.lcd.printf(0, 16,"%1.2f V", vol);
+
+  hs_joy.lcd.printf(0, 16*1,"%1.2f V", hs_joy.battery.getVoltage());
+  hs_joy.lcd.printf(0, 16*2,"%3d %%", hs_joy.battery.getLevel());
   hs_joy.lcd.display();
   
   if (hs_joy.button.isClicked(BUTTON_START))

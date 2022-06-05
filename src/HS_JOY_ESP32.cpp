@@ -165,6 +165,7 @@ bool HS_JOY_ESP32::update(void)
 
   adcInfoUpdate();
   button.update();
+  battery.update();
 
   return true;
 }

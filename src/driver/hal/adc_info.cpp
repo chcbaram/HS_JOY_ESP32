@@ -76,3 +76,12 @@ uint16_t adcInfoReadRaw(AdcChannel_t ch)
 
   return ret;
 }
+
+uint16_t adcInfoReadNow(AdcChannel_t ch)
+{
+  uint16_t ret = 0;
+
+  adc_pin_info[ch].value_raw = analogRead(adc_pin_info[ch].pin_number);
+  ret = adc_pin_info[ch].value_raw;
+  return ret;
+}

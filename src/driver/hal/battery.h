@@ -19,6 +19,9 @@ class Battery
     
     bool begin(void);
     float getVoltage(void);
+    int32_t getLevel(void);
+
+    void update(void);
 
   private:
 

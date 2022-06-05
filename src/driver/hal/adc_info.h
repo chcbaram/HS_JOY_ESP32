@@ -29,5 +29,6 @@ void adcInfoDisable(AdcChannel_t ch);
 void adcInfoUpdate(void);
 uint16_t adcInfoRead(AdcChannel_t ch);
 uint16_t adcInfoReadRaw(AdcChannel_t ch);
+uint16_t adcInfoReadNow(AdcChannel_t ch);
 
 #endif
