@@ -62,6 +62,8 @@ bool HS_JOY_ESP32::begin(int baud)
   led.begin();
   lcd.begin();
   button.begin();
+  battery.begin();
+
 
   for (int i=0; i<8; i++)
   {
@@ -173,17 +175,6 @@ bool HS_JOY_ESP32::update(void)
   button.update();
 
   return true;
-}
-
-float HS_JOY_ESP32::batteryGetVoltage(void)
-{
-  float value;
-
-  value = adcInfoReadRaw(ADC_CH_VBAT);
-
-  value = (3.3f * 2.0f) * value / 4095.f;  
-
-  return value;
 }
 
 void HS_JOY_ESP32::menuAdd(const char *menu_str, void (*setup_func)(void), void (*loop_func)(void))
