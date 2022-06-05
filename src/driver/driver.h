@@ -12,7 +12,7 @@
 #include "./hal/button.h"
 #include "./hal/led.h"
 #include "./hal/battery.h"
-
+#include "./hal/menu.h"
 
 
 void driverInit(void);

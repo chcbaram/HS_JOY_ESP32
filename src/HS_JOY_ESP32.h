@@ -16,33 +16,7 @@
 
 
 
-#define MENU_MAX_NODE             32
 
-
-typedef struct
-{
-  uint8_t index;
-  char    str[16];
-  uint8_t str_length;
-
-  void (*setup_func)(void);
-  void (*loop_func)(void);
-} menu_node_t;
-
-
-typedef struct 
-{
-  uint8_t run_count;  
-  uint8_t count;
-  uint8_t cursor;
-  uint8_t first_rows;
-  uint8_t view_rows;
-  uint32_t pre_time;
-  uint32_t pre_time_pressed;
-  uint32_t press_count;
-  bool     press_state;
-  menu_node_t node[MENU_MAX_NODE];
-} menu_t;
 
 
 
@@ -57,7 +31,7 @@ class HS_JOY_ESP32
     OLed      lcd;
     Button    button;
     Battery   battery;
-
+    Menu      menu;
 
     bool begin(int baud);        
 
@@ -68,14 +42,9 @@ class HS_JOY_ESP32
     bool update(void);
 
   private:    
-    bool printInitLog(const char *str_msg, bool ret);
-    bool menuDraw(menu_t *p_menu);
-
-    bool is_init;
-
     uint32_t pre_time[8];
-    menu_t menu;
-    menu_t *p_menu;
+    bool printInitLog(const char *str_msg, bool ret);
+    bool is_init;
 };
 
 extern HS_JOY_ESP32 hs_joy;
