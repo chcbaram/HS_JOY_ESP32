@@ -34,6 +34,7 @@ class HS_JOY_ESP32
     Menu      menu;
     Stick     stickL;
     Stick     stickR;
+    Buzzer    buzzer;
 
     bool begin(int baud);        
 

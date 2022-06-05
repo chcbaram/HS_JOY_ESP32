@@ -9,9 +9,9 @@ void setup()
   hs_joy.menu.add("배터리", NULL, batteryInfo);
   hs_joy.menu.add("버튼", NULL, buttonInfo);
   hs_joy.menu.add("조이스틱", NULL, joystickInfo);
+  hs_joy.menu.add("Buzzer", NULL, buzzerInfo);
   hs_joy.menu.add("정보", NULL, info);
 }
-
 
 void loop() 
 {
@@ -38,7 +38,7 @@ void batteryInfo()
   
   if (hs_joy.button.isClicked(BUTTON_START))
   {
-    hs_joy.menu.exit();
+    hs_joy.menu.exit();       
   }
 }
 
@@ -104,6 +104,46 @@ void joystickInfo()
   if (hs_joy.button.isClicked(BUTTON_START))
   {
     hs_joy.menu.exit();
+  }
+}
+
+void buzzerInfo()
+{
+  int melody[] = {
+    NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4
+  };
+  int noteDurations[] = {
+    4, 8, 8, 4, 4, 4, 4, 4
+  };
+
+
+  while(1)
+  {
+    hs_joy.lcd.clearDisplay();
+    hs_joy.lcd.printf(0, 0, "Buzzer");
+
+    hs_joy.lcd.printf(0,32, "Press A Key");              
+    hs_joy.lcd.display();
+
+
+    if (hs_joy.button.isClicked(BUTTON_A))
+    {
+      for (int thisNote = 0; thisNote < 8; thisNote++) 
+      {
+        int noteDuration = 1000 / noteDurations[thisNote];
+        hs_joy.buzzer.playTone(melody[thisNote], noteDuration);
+
+        int pauseBetweenNotes = noteDuration * 1.30;
+        delay(pauseBetweenNotes);
+        hs_joy.buzzer.stopTone();
+      }
+    }
+
+    if (hs_joy.button.isClicked(BUTTON_START))
+    {
+      hs_joy.menu.exit();
+      break;
+    }
   }
 }
 
