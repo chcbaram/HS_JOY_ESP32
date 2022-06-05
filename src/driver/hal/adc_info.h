@@ -24,10 +24,10 @@ typedef enum
 
 
 void adcInfoInit(void);
-void adcInfoEnable(uint16_t ch);
-void adcInfoDisable(uint16_t ch);
+void adcInfoEnable(AdcChannel_t ch);
+void adcInfoDisable(AdcChannel_t ch);
 void adcInfoUpdate(void);
-uint16_t adcInfoRead(uint16_t ch);
-uint16_t adcInfoReadRaw(uint16_t ch);
+uint16_t adcInfoRead(AdcChannel_t ch);
+uint16_t adcInfoReadRaw(AdcChannel_t ch);
 
 #endif

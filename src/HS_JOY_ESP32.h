@@ -65,9 +65,10 @@ class HS_JOY_ESP32
     void ledOff(void);
     void ledToggle(void);
     
-    uint8_t batteryGetVoltage(void);
+    float batteryGetVoltage(void);
 
     void menuAdd(const char *menu_str, void (*setup_func)(void) = NULL, void (*loop_func)(void) = NULL);
+    void menuExit(void);
     void menuUpdate(void);
 
   private:

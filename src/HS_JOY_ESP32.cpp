@@ -60,9 +60,8 @@ bool HS_JOY_ESP32::begin(int baud)
   ledOff();
   
   adcInfoInit();
-  adcInfoEnable(VBAT);
   i2c_bus.begin(21, 22);
-  
+
   lcd.begin();
   button.begin();
 
@@ -193,13 +192,13 @@ void HS_JOY_ESP32::ledToggle(void)
   digitalWrite(JOY_LED_PIN, !digitalRead(JOY_LED_PIN));
 }
 
-uint8_t HS_JOY_ESP32::batteryGetVoltage(void)
+float HS_JOY_ESP32::batteryGetVoltage(void)
 {
-  uint16_t value;
+  float value;
 
-  value = adcInfoReadRaw(VBAT);
+  value = adcInfoReadRaw(ADC_CH_VBAT);
 
-  value = 72 * value / 4095;  // 3.6V * x / 4095
+  value = (3.3f * 2.0f) * value / 4095.f;  
 
   return value;
 }
@@ -247,6 +246,15 @@ void HS_JOY_ESP32::menuUpdate(void)
   }  
 }
 
+void HS_JOY_ESP32::menuExit(void)
+{
+  p_menu->run_count = 0;
+  p_menu->pre_time = millis();
+  p_menu->press_count = 0;  
+
+  button.clearEvent();
+}
+
 bool HS_JOY_ESP32::menuDraw(menu_t *p_menu)
 {
   uint8_t view_rows;
@@ -275,13 +283,13 @@ bool HS_JOY_ESP32::menuDraw(menu_t *p_menu)
     press_done = true;
   }
 
-  if (button.isClicked(BUTTON_START))
+  if (button.isClicked(BUTTON_A))
   {
     p_menu->press_count = 0;
 
-    for (int i=0; i< lcd.width(); i+=4)
+    for (int i=0; i< lcd.width(); i+=8)
     {
-      lcd.fillRect(i, 0, 4, lcd.height(), 0);
+      lcd.fillRect(i, 0, 8, lcd.height(), 0);
       lcd.display();
     }
     p_menu->run_count = 1;      
