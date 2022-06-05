@@ -12,9 +12,6 @@ OLed::~OLed()
 boolean OLed::begin(void)
 {
   boolean ret;
-
-
-  Wire1.begin(21, 22);
     
   ret = Adafruit_SSD1306::begin(SSD1306_SWITCHCAPVCC, 0x3C, false, false);
 

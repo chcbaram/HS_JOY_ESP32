@@ -2,6 +2,7 @@
 #define _OLED_H_
 
 #include <Arduino.h>
+#include "../def.h"
 #include "../gfx/Adafruit_GFX_Library/Adafruit_GFX.h"
 #include "../gfx/Adafruit_SSD1306/Adafruit_SSD1306.h"
 #include "../hangul/PHan_Lib.h"
@@ -10,7 +11,7 @@
 class OLed : public Adafruit_SSD1306
 {
   public:
-    OLed(): Adafruit_SSD1306(128, 64, &Wire1, -1, 800000UL, 100000UL) { is_init = false; }
+    OLed(): Adafruit_SSD1306(128, 64, &i2c_bus, -1, 800000UL, 100000UL) { is_init = false; }
     ~OLed();
     
     boolean begin(void);

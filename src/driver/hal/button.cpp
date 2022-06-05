@@ -45,26 +45,7 @@ enum ButtonState
 
 
 
-typedef struct
-{
-  uint8_t       pull_up;
-  uint32_t      pin;  
-  uint8_t       on_state;
-} button_tbl_t;
-
-
-button_tbl_t button_tbl[BUTTON_MAX_CH] =
-    {
-        {1, 13, 0}, // LEFT
-        {1, 14, 0}, // RIGHT
-        {1, 15, 0}, // UP
-        {1, 16, 0}, // DOWN
-        {0, 17, 1}, // START
-        {1, 23, 0}, // A
-        {1, 25, 0}, // B
-        {1, 26, 0}, // X
-        {1, 27, 0}, // Y
-    };
+static uint32_t button_pin_status = 0;
 
 
 
@@ -72,18 +53,8 @@ bool buttonInit(void)
 {
   bool ret = true;
 
-  for (int i=0; i<BUTTON_MAX_CH; i++)
-  {
-    if (button_tbl[i].pull_up)
-    {   
-      pinMode(button_tbl[i].pin, INPUT_PULLUP);
-    }
-    else
-    {
-      pinMode(button_tbl[i].pin, INPUT);
-    }
-  }
 
+  pinMode(26, INPUT_PULLUP);
 
   return ret;
 }
@@ -97,7 +68,7 @@ bool buttonGetPressed(uint8_t ch)
     return false;
   }
 
-  if (digitalRead(button_tbl[ch].pin) == button_tbl[ch].on_state)
+  if (button_pin_status & (1<<ch))
   {
     ret = true;
   }
@@ -116,6 +87,45 @@ uint16_t buttonGetData(void)
   }
 
   return ret;
+}
+
+static uint8_t i2cReadReg(uint8_t cmd)
+{
+  const uint8_t dev_addr = 0x20;
+  uint8_t ret;
+  
+  // PCA9554PW에서 GPIO 데이터 읽기 
+  //  
+  i2c_bus.beginTransmission(dev_addr); 
+  i2c_bus.write(cmd);                
+  i2c_bus.endTransmission();  
+  i2c_bus.requestFrom((int)dev_addr, (int)1);     
+  ret = i2c_bus.read();   
+  
+  return ret;
+}
+
+static void i2cWriteReg(uint8_t cmd, uint8_t data)
+{
+  const uint8_t dev_addr = 0x20;
+
+  // PCA9554PW에서 GPIO 데이터 읽기 
+  //  
+  i2c_bus.beginTransmission(dev_addr); 
+  i2c_bus.write(cmd);
+  i2c_bus.write(data);
+  i2c_bus.endTransmission();  
+}
+
+void buttonPinUpdate(void)
+{
+  uint8_t  reg_data;
+  uint32_t out_data;
+
+  reg_data = i2cReadReg(0);
+  out_data = ((~reg_data)&0xFF) | (digitalRead(26)<<BUTTON_START);
+
+  button_pin_status = out_data;
 }
 
 enum ButtonObjState
@@ -143,7 +153,9 @@ void buttonObjCreate(button_obj_t *p_obj, uint8_t ch, uint32_t pressed_time, uin
 bool buttonObjUpdate(button_obj_t *p_obj)
 {
   bool ret = false;
+  
 
+  buttonPinUpdate();
 
   switch(p_obj->state)
   {

@@ -129,7 +129,7 @@ void loop() {
     hs_joy.lcd.print((int)fps);    
     hs_joy.lcd.display();
      
-    uint16_t ain = analogRead(2)>>2;
+    uint16_t ain = hs_joy.stickL.getAdcX()>>2;
     potentiometer_value = constrain(map(ain, 0, 1023, value_max, value_min), value_min, value_max);
   
     // FPS counter calculations

@@ -10,7 +10,11 @@
 
 #include "./hal/adc_info.h"
 #include "./hal/button.h"
-
+#include "./hal/led.h"
+#include "./hal/battery.h"
+#include "./hal/menu.h"
+#include "./hal/stick.h"
+#include "./hal/buzzer.h"
 
 
 void driverInit(void);

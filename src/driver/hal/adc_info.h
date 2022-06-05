@@ -10,14 +10,25 @@
 #include <Arduino.h>
 
 
-#define VBAT  36
+typedef enum
+{
+  ADC_CH_VBAT,
+  ADC_CH_STICK_L_X,
+  ADC_CH_STICK_L_Y,
+  ADC_CH_STICK_R_X,
+  ADC_CH_STICK_R_Y,
+  ADC_CH_MAX
+} AdcChannel_t;
+
+
 
 
 void adcInfoInit(void);
-void adcInfoEnable(uint16_t pin);
-void adcInfoDisable(uint16_t pin);
+void adcInfoEnable(AdcChannel_t ch);
+void adcInfoDisable(AdcChannel_t ch);
 void adcInfoUpdate(void);
-uint16_t adcInfoRead(uint16_t pin);
-uint16_t adcInfoReadRaw(uint16_t pin);
+uint16_t adcInfoRead(AdcChannel_t ch);
+uint16_t adcInfoReadRaw(AdcChannel_t ch);
+uint16_t adcInfoReadNow(AdcChannel_t ch);
 
 #endif
