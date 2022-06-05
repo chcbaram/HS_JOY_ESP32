@@ -55,13 +55,11 @@ bool HS_JOY_ESP32::begin(int baud)
   Serial.println();
   Serial.println();
   Serial.println("[HS_JOY_ESP32]");
-
-  pinMode(JOY_LED_PIN, OUTPUT);
-  ledOff();
-  
+ 
   adcInfoInit();
   i2c_bus.begin(21, 22);
 
+  led.begin();
   lcd.begin();
   button.begin();
 
@@ -175,21 +173,6 @@ bool HS_JOY_ESP32::update(void)
   button.update();
 
   return true;
-}
-
-void HS_JOY_ESP32::ledOn(void)
-{
-  digitalWrite(JOY_LED_PIN, LOW);
-}
-
-void HS_JOY_ESP32::ledOff(void)
-{
-  digitalWrite(JOY_LED_PIN, HIGH);
-}
-
-void HS_JOY_ESP32::ledToggle(void)
-{
-  digitalWrite(JOY_LED_PIN, !digitalRead(JOY_LED_PIN));
 }
 
 float HS_JOY_ESP32::batteryGetVoltage(void)

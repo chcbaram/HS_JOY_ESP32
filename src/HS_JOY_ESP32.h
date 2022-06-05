@@ -51,27 +51,23 @@ class HS_JOY_ESP32
   public:
     HS_JOY_ESP32();
     ~HS_JOY_ESP32();
-    
-    
+        
 
+    Led       led;
     OLed      lcd;
     Button    button;
 
 
-    bool begin(int baud);
-    bool update(void);
-
-    void ledOn(void);
-    void ledOff(void);
-    void ledToggle(void);
-    
+    bool begin(int baud);    
     float batteryGetVoltage(void);
 
     void menuAdd(const char *menu_str, void (*setup_func)(void) = NULL, void (*loop_func)(void) = NULL);
     void menuExit(void);
     void menuUpdate(void);
 
-  private:
+    bool update(void);
+    
+  private:    
     bool printInitLog(const char *str_msg, bool ret);
     bool menuDraw(menu_t *p_menu);
 

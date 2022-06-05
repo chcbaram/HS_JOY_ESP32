@@ -9,4 +9,12 @@
 
 #define JOY_LED_PIN   2
 
+
+enum
+{
+  LEFT,
+  RIGHT,
+}; 
+
+
 #endif
