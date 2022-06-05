@@ -7,7 +7,7 @@
 #include "adc_info.h"
 
 
-#define ADC_INFO_PIN_MAX      1
+
 
 
 typedef struct
@@ -19,35 +19,27 @@ typedef struct
 } adc_pin_info_t;
 
 
-adc_pin_info_t adc_pin_info[ADC_INFO_PIN_MAX] =
+adc_pin_info_t adc_pin_info[ADC_CH_MAX] =
 {
-  {VBAT, true, 0, 0},
+  {25, true, 0, 0},
+  {36, true, 0, 0},
+  {39, true, 0, 0},
+  {34, true, 0, 0},
+  {35, true, 0, 0},
 };
 
 void adcInfoInit(void)
 {
 }
 
-void adcInfoEnable(uint16_t pin)
+void adcInfoEnable(AdcChannel_t ch)
 {
-  for (int i=0; i<ADC_INFO_PIN_MAX; i++)
-  {
-    if (adc_pin_info[i].pin_number == pin)
-    {
-      adc_pin_info[i].enable = true;
-    }
-  }
+  adc_pin_info[ch].enable = true;
 }
 
-void adcInfoDisable(uint16_t pin)
+void adcInfoDisable(AdcChannel_t ch)
 {
-  for (int i=0; i<ADC_INFO_PIN_MAX; i++)
-  {
-    if (adc_pin_info[i].pin_number == pin)
-    {
-      adc_pin_info[i].enable = false;
-    }
-  }
+  adc_pin_info[ch].enable = false;
 }
 
 void adcInfoUpdate(void)
@@ -55,7 +47,7 @@ void adcInfoUpdate(void)
   uint16_t value;
 
 
-  for (int i=0; i<ADC_INFO_PIN_MAX; i++)
+  for (int i=0; i<ADC_CH_MAX; i++)
   {
     if (adc_pin_info[i].enable == true)
     {
@@ -67,34 +59,20 @@ void adcInfoUpdate(void)
   }  
 }
 
-uint16_t adcInfoRead(uint16_t pin)
+uint16_t adcInfoRead(AdcChannel_t ch)
 {
   uint16_t ret = 0;
 
-
-  for (int i=0; i<ADC_INFO_PIN_MAX; i++)
-  {
-    if (adc_pin_info[i].pin_number == pin)
-    {
-      ret = adc_pin_info[i].value;
-    }
-  }
+  ret = adc_pin_info[ch].value;
 
   return ret;
 }
 
-uint16_t adcInfoReadRaw(uint16_t pin)
+uint16_t adcInfoReadRaw(AdcChannel_t ch)
 {
   uint16_t ret = 0;
 
-
-  for (int i=0; i<ADC_INFO_PIN_MAX; i++)
-  {
-    if (adc_pin_info[i].pin_number == pin)
-    {
-      ret = adc_pin_info[i].value_raw;
-    }
-  }
+  ret = adc_pin_info[ch].value_raw;
 
   return ret;
 }

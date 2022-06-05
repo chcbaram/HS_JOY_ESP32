@@ -8,19 +8,19 @@
 #define _BUTTON_H_
 
 #include <Arduino.h>
-
+#include "../def.h"
 
 typedef enum
 {
+  BUTTON_A,
+  BUTTON_B,
+  BUTTON_X,
+  BUTTON_Y,
   BUTTON_LEFT,
   BUTTON_RIGHT,
   BUTTON_UP,
   BUTTON_DOWN,
   BUTTON_START,
-  BUTTON_A,
-  BUTTON_B,
-  BUTTON_X,
-  BUTTON_Y,
   BUTTON_MAX
 } ButtonName_t;
 

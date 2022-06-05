@@ -21,7 +21,7 @@ void info()
 {
   hs_joy.lcd.clearDisplay();
   hs_joy.lcd.printf(0, 0, "HS JOY ESP32");
-  hs_joy.lcd.printf(0,16, "V 2022.03.27");
+  hs_joy.lcd.printf(0,16, "V 2022.06.05");
   hs_joy.lcd.display();
   delay(2000);
 }

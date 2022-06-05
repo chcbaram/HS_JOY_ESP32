@@ -14,6 +14,8 @@
 #define _DEFINE_H_
 
 
+#include <string.h>
+
 typedef  unsigned int        U32;   
 typedef  short    int        U16; 
 typedef  signed   int        S32;
