@@ -32,6 +32,8 @@ class HS_JOY_ESP32
     Button    button;
     Battery   battery;
     Menu      menu;
+    Stick     stickL;
+    Stick     stickR;
 
     bool begin(int baud);        
 

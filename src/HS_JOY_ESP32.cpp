@@ -63,6 +63,8 @@ bool HS_JOY_ESP32::begin(int baud)
   button.begin();
   battery.begin();
   menu.begin();
+  stickL.begin(ADC_CH_STICK_L_X, ADC_CH_STICK_L_Y);
+  stickR.begin(ADC_CH_STICK_R_X, ADC_CH_STICK_R_Y);
 
   for (int i=0; i<8; i++)
   {

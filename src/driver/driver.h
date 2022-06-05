@@ -13,6 +13,7 @@
 #include "./hal/led.h"
 #include "./hal/battery.h"
 #include "./hal/menu.h"
+#include "./hal/stick.h"
 
 
 void driverInit(void);
