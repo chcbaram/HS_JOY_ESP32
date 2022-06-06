@@ -2,6 +2,9 @@
 
 
 
+LVGL_IMG_DEF(lvgl_img);
+
+
 
 void setup() 
 {
@@ -10,6 +13,7 @@ void setup()
   hs_joy.menu.add("버튼", NULL, buttonInfo);
   hs_joy.menu.add("조이스틱", NULL, joystickInfo);
   hs_joy.menu.add("Buzzer", NULL, buzzerInfo);
+  hs_joy.menu.add("Image", NULL, imageInfo);
   hs_joy.menu.add("정보", NULL, info);
 }
 
@@ -138,6 +142,60 @@ void buzzerInfo()
         hs_joy.buzzer.stopTone();
       }
     }
+
+    if (hs_joy.button.isClicked(BUTTON_START))
+    {
+      hs_joy.menu.exit();
+      break;
+    }
+  }
+}
+
+void imageInfo()
+{
+  int16_t img_x;
+  int16_t img_y;
+  int16_t img_w;
+  int16_t img_h;
+  int16_t img_step;
+
+  image_t img;
+
+  img = hs_joy.lcd.createImage(lvgl_img);
+
+
+  img_x = 0;
+  img_y = 100;
+  img_w = 100;
+  img_h = 40;
+  img_step = 10;
+
+  while(1)
+  {
+    hs_joy.lcd.clearDisplay();
+
+    if (hs_joy.button.isPressed(BUTTON_LEFT))
+    {
+      if (img_x > 0) img_x -= img_step;
+    }
+    if (hs_joy.button.isPressed(BUTTON_RIGHT))
+    {
+      if (img_x < (img.w-img_w)) img_x += img_step;
+    }
+    if (hs_joy.button.isPressed(BUTTON_UP))
+    {
+      if (img_y > 0) img_y -= img_step;
+    }
+    if (hs_joy.button.isPressed(BUTTON_DOWN))
+    {
+      if (img_y < (img.h-img_h)) img_y += img_step;
+    }
+
+    hs_joy.lcd.drawImage(img, (LCD_WIDTH-img_w)/2, (LCD_HEIGHT-img_h)/2, img_x, img_y, img_w, img_h);
+    hs_joy.lcd.drawRect((LCD_WIDTH-img_w)/2, (LCD_HEIGHT-img_h)/2, img_w, img_h, WHITE);
+
+    hs_joy.lcd.display();
+
 
     if (hs_joy.button.isClicked(BUTTON_START))
     {
