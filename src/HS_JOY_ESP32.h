@@ -10,7 +10,7 @@
 
 #include <Arduino.h>
 
-#include "./driver/driver.h"
+#include "driver/driver.h"
 
 
 
@@ -37,10 +37,6 @@ class HS_JOY_ESP32
     Buzzer    buzzer;
 
     bool begin(int baud);        
-
-    void menuAdd(const char *menu_str, void (*setup_func)(void) = NULL, void (*loop_func)(void) = NULL);
-    void menuExit(void);
-    void menuUpdate(void);
 
     bool update(void);
 
