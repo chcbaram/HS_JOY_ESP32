@@ -38,10 +38,6 @@ class HS_JOY_ESP32
 
     bool begin(int baud);        
 
-    void menuAdd(const char *menu_str, void (*setup_func)(void) = NULL, void (*loop_func)(void) = NULL);
-    void menuExit(void);
-    void menuUpdate(void);
-
     bool update(void);
 
   private:    
