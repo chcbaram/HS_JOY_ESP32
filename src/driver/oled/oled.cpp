@@ -98,3 +98,62 @@ void OLed::disHanFont(int x, int y, PHAN_FONT_OBJ *FontPtr)
     }
   }
 }
+
+image_t OLed::createImage(lvgl_img_t &img, int16_t x, int16_t y, int16_t w, int16_t h)
+{
+  image_t ret;
+
+  ret.x = x;
+  ret.y = y;
+
+  if (w > 0) ret.w = w;
+  else       ret.w = img.header.w;
+
+  if (h > 0) ret.h = h;
+  else       ret.h = img.header.h;
+
+  ret.p_img = &img;
+
+  return ret;
+}
+
+void OLed::drawImage(image_t &img, int16_t draw_x, int16_t draw_y, int16_t img_x, int16_t img_y, int16_t img_w, int16_t img_h)
+{
+  int16_t o_x;
+  int16_t o_y;  
+  int16_t o_w;
+  int16_t o_h;
+  uint16_t *p_data;
+  uint16_t pixel;
+
+
+  o_w = img.w;
+  o_h = img.h;
+
+  if (img_w > 0) o_w = img_w;
+  if (img_h > 0) o_h = img_h;
+
+  p_data = (uint16_t *)img.p_img->data;
+
+  for (int yi=0; yi<o_h; yi++)
+  {
+    o_y = (img.y + yi + img_y);
+    if (o_y >= img.p_img->header.h) break;
+
+    o_y = o_y * img.p_img->header.w;
+    for (int xi=0; xi<o_w; xi++)
+    {
+      o_x = img.x + xi + img_x;
+      if (o_x >= img.p_img->header.w) break;
+
+      pixel = p_data[o_y + o_x];
+      if (pixel != green)
+      {
+        if (pixel > 0)
+          drawPixel(draw_x+xi, draw_y+yi, textcolor);
+        else
+          drawPixel(draw_x+xi, draw_y+yi, textbgcolor);
+      }
+    }
+  }  
+}
