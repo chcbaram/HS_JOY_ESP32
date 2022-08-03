@@ -11,8 +11,7 @@
 
 
 typedef enum
-{
-  ADC_CH_VBAT,
+{  
   ADC_CH_STICK_L_X,
   ADC_CH_STICK_L_Y,
   ADC_CH_STICK_R_X,

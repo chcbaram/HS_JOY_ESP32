@@ -12,6 +12,7 @@
 
 #define BAT_ADC_MAX_COUNT     100
 
+static const uint8_t ADC_VBAT_PIN = 25;
 
 static int32_t bat_level = 0;
 static int32_t bat_vol = 0;
@@ -22,7 +23,7 @@ static uint32_t pre_time = 0;
 static uint32_t buf_index = 0;
 static uint32_t last_level = 0;
 
-static uint32_t adc_data[BAT_ADC_MAX_COUNT];
+static uint32_t voltage_data[BAT_ADC_MAX_COUNT];
 
 
 
@@ -42,7 +43,7 @@ bool Battery::begin(void)
 
   for (i=0; i<BAT_ADC_MAX_COUNT; i++)
   {
-    adc_data[buf_index] = adcInfoReadNow(ADC_CH_VBAT);
+    voltage_data[buf_index] = getVoltage();
     buf_index = (buf_index + 1) % BAT_ADC_MAX_COUNT;
   }  
   return true;
@@ -61,21 +62,20 @@ void Battery::update(void)
   {
     pre_time = millis();
 
-    adc_data[buf_index] = adcInfoReadRaw(ADC_CH_VBAT);
+    voltage_data[buf_index] = getVoltage();
     buf_index = (buf_index + 1) % BAT_ADC_MAX_COUNT;
 
 
     sum = 0;
     for (i=0; i<BAT_ADC_MAX_COUNT; i++)
     {
-      sum += adc_data[i];
+      sum += voltage_data[i];
     }
-
     avg = sum/BAT_ADC_MAX_COUNT;
-    bat_vol = 660 * avg / 4095;
-    vol   = constrain(bat_vol, bat_min, bat_max);
 
-    value = map(vol, bat_min, bat_max, 0, 100);
+    vol = avg * 100;  
+    vol = constrain(vol, bat_min, bat_max); 
+    value = map(vol, bat_min, bat_max, 0, 100);    
     if (abs((double)(value-last_level)) > 5 || value == 100)
     {
       bat_level = value;
@@ -86,12 +86,11 @@ void Battery::update(void)
 
 float Battery::getVoltage(void)
 {
+  uint16_t milli_volts;
   float value;
 
-  value = adcInfoReadRaw(ADC_CH_VBAT);
-
-  value = (3.3f * 2.0f) * value / 4095.f;  
-
+  milli_volts = analogReadMilliVolts(ADC_VBAT_PIN);
+  value = (float)milli_volts * 2 / 1000.f;
   return value;
 }
 

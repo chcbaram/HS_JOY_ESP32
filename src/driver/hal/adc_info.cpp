@@ -20,8 +20,7 @@ typedef struct
 
 
 adc_pin_info_t adc_pin_info[ADC_CH_MAX] =
-{
-  {25, true, 0, 0},
+{  
   {36, true, 0, 0},
   {39, true, 0, 0},
   {34, true, 0, 0},

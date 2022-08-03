@@ -10,7 +10,6 @@
 #include <Arduino.h>
 #include "../def.h"
 
-
 class Battery
 {
   public:
