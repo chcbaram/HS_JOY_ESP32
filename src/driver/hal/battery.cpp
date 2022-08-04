@@ -65,19 +65,16 @@ void Battery::update(void)
     voltage_data[buf_index] = analogReadMilliVolts(ADC_VBAT_PIN) * 2 / 10;
     buf_index = (buf_index + 1) % BAT_ADC_MAX_COUNT;
 
-
     sum = 0;
     for (i=0; i<BAT_ADC_MAX_COUNT; i++)
     {
       sum += voltage_data[i];
     }
     avg = sum/BAT_ADC_MAX_COUNT;
-    Serial.println(avg);
     vol = avg;
     vol = constrain(vol, bat_min, bat_max); 
     value = map(vol, bat_min, bat_max, 0, 100);    
     bat_level = value;
-    Serial.println(bat_level);
   }
 }
 
