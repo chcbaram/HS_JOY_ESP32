@@ -43,7 +43,7 @@ bool Battery::begin(void)
 
   for (i=0; i<BAT_ADC_MAX_COUNT; i++)
   {
-    voltage_data[buf_index] = getVoltage();
+    voltage_data[buf_index] = analogReadMilliVolts(ADC_VBAT_PIN) * 2 / 10;
     buf_index = (buf_index + 1) % BAT_ADC_MAX_COUNT;
   }  
   return true;
@@ -62,7 +62,7 @@ void Battery::update(void)
   {
     pre_time = millis();
 
-    voltage_data[buf_index] = getVoltage();
+    voltage_data[buf_index] = analogReadMilliVolts(ADC_VBAT_PIN) * 2 / 10;
     buf_index = (buf_index + 1) % BAT_ADC_MAX_COUNT;
 
 
@@ -72,15 +72,10 @@ void Battery::update(void)
       sum += voltage_data[i];
     }
     avg = sum/BAT_ADC_MAX_COUNT;
-
-    vol = avg * 100;  
+    vol = avg;
     vol = constrain(vol, bat_min, bat_max); 
     value = map(vol, bat_min, bat_max, 0, 100);    
-    if (abs((double)(value-last_level)) > 5 || value == 100)
-    {
-      bat_level = value;
-      last_level = value;
-    }
+    bat_level = value;
   }
 }
 
