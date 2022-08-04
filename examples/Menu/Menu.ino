@@ -6,11 +6,11 @@ LVGL_IMG_DEF(lvgl_img);
 
 
 
-void setup() 
+void setup()
 {
   hs_joy.begin(115200);
   hs_joy.menu.add("배터리", NULL, batteryInfo);
-  hs_joy.menu.add("버튼1", NULL, buttonInfo);
+  hs_joy.menu.add("버튼", NULL, buttonInfo);
   hs_joy.menu.add("조이스틱", NULL, joystickInfo);
   hs_joy.menu.add("Buzzer", NULL, buzzerInfo);
   hs_joy.menu.add("Image", NULL, imageInfo);
